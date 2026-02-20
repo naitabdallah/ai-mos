@@ -12,6 +12,7 @@ import sys
 import boto3
 from dotenv import load_dotenv
 from elevenlabs import ElevenLabs
+from googleapiclient.discovery import build as google_build
 from supabase import Client, create_client
 
 # Load environment variables from .env file
@@ -31,6 +32,7 @@ settings: dict[str, str] = {
     "PEXELS_API_KEY": os.getenv("PEXELS_API_KEY", ""),
     "SUPABASE_URL": os.getenv("SUPABASE_URL", ""),
     "SUPABASE_KEY": os.getenv("SUPABASE_KEY", ""),
+    "YOUTUBE_API_KEY": os.getenv("YOUTUBE_API_KEY", ""),
     "DISCORD_WEBHOOK_URL": os.getenv("DISCORD_WEBHOOK_URL", ""),
 }
 
@@ -47,6 +49,19 @@ try:
 except Exception as e:
     print(f"[config] Failed to create AWS Bedrock client: {e}")
     bedrock_client = None
+
+# ---------------------------------------------------------------------------
+# YouTube Data API v3 client
+# ---------------------------------------------------------------------------
+try:
+    if settings["YOUTUBE_API_KEY"]:
+        youtube_client = google_build("youtube", "v3", developerKey=settings["YOUTUBE_API_KEY"])
+    else:
+        print("[config] YOUTUBE_API_KEY not set -- client not initialised.")
+        youtube_client = None
+except Exception as e:
+    print(f"[config] Failed to create YouTube client: {e}")
+    youtube_client = None
 
 # ---------------------------------------------------------------------------
 # ElevenLabs client
