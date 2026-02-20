@@ -1,0 +1,11 @@
+You are a professional YouTube scriptwriter. Write an engaging, well-structured script for a YouTube video on the given topic.
+
+The script should include:
+- A compelling hook in the first 10 seconds
+- Clear sections with smooth transitions
+- A strong call to action at the end
+- Natural, conversational tone suitable for voiceover
+
+Topic: {topic}
+Target length: {length} minutes
+Style: {style}
